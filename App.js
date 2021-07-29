@@ -1,83 +1,48 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-  ScrollView,
-} from 'react-native';
+import 'react-native-gesture-handler';
 import React from 'react';
-import TodoInsert from './components/TodoInsert';
-import TodoList from './components/TodoList';
-import TodoListItem from './components/TodoListItem';
-import {useState} from 'react';
+import TodoPurchases from './components/TodoPurchases';
+import TodoTasks from './components/TodoTasks';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 
+const Stack = createStackNavigator();
 
-const App = () => {
-
-  const [todos, setTodos] = useState([]);
-
-  const addTodo = text => {
-    setTodos([
-      ...todos,
-      {id: Math.random().toString(), textValue: text, checked: false},
-    ]);
-  };
-
-  const onRemove = id => e => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
-
-  const onToggle = id => e => {
-    setTodos(
-      todos.map(todo =>
-        todo.id === id ? {...todo, checked: !todo.checked} : todo,
-      ),
-    );
-  };
-
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.appTitle}>Liste d'achats</Text>
-      <View style={styles.card}>
-        <TodoInsert onAddTodo={addTodo} />
-        <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
-      </View>
-    </SafeAreaView>
+const HomeScreen = ({ navigation }) => {  
+  return (    
+    <Button      
+      title="Go to Jane's profile"      
+      onPress={() =>        
+      navigation.navigate('Profile', 
+        { name: 'Jane' })      
+      }    
+    />  
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3143e8',
-  },
-  appTitle: {
-    color: '#fff',
-    fontSize: 36,
-    marginTop: 30,
-    marginBottom: 30,
-    fontWeight: '300',
-    textAlign: 'center',
-    backgroundColor: '#3143e8',
-  },
-  card: {
-    backgroundColor: '#fff',
-    flex: 1,
-    borderTopLeftRadius: 10, // to provide rounded corners
-    borderTopRightRadius: 10, // to provide rounded corners
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  input: {
-    padding: 20,
-    borderBottomColor: '#bbb',
-    borderBottomWidth: 1,
-    fontSize: 24,
-    marginLeft: 20,
-  },
-});
+const ProfileScreen = ({ navigation, route }) => {  
+  return <Text>This is {route.params.name}'s profile</Text>;
+};
+
+const App = () => {
+
+  return (
+    <NavigationContainer> 
+      <Stack.Navigator>        
+        <Stack.Screen          
+          name="Purchases"          
+          component={TodoPurchases}          
+          options={{ title: 'Achats' }}        
+        />        
+        <Stack.Screen 
+          name="Tasks" 
+          component={TodoTasks} 
+          options={{ title: 'Tâches' }}        
+        />      
+      </Stack.Navigator>    
+      {/* <TodoPurchases /> */}
+    </NavigationContainer>
+  );
+};
 
 export default App;
