@@ -22,8 +22,6 @@ import {
       setTodos([
         ...todos,
         {id: Math.random().toString(), textValue: text, checked: false},
-        console.log(text + " salut !!"),
-        // console.log(textValue),
       ]);
     };
   

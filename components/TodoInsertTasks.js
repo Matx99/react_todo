@@ -13,19 +13,11 @@ const TodoInsertTasks = ({onAddTodo}) => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  // Geolocation.setRNConfiguration(config); 
+  const [geo, setGeo] = useState();
 
   const getGeo = () => {
-    Geolocation.getCurrentPosition(info => console.log(info));
+    Geolocation.getCurrentPosition(info => console.log(info.coords.latitude + " " + info.coords.longitude));
   };
-
-  const getDate = (x) => {
-    // const formattedDate = format(selectedDate, "yyyy-LL-dd");
-    // onDateChange={date => { setDate(new Date(date)) }}
-    // getDateStr={date => format(new Date(date), "d MMMM yyyy")}
-    console.log(x);
-    return x;
-  }
 
   const todoInputHandler = newTodo => {
     setNewTodoItem(newTodo);
@@ -35,14 +27,12 @@ const TodoInsertTasks = ({onAddTodo}) => {
     var currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
-    global.finalDate = currentDate;
-    // getDate(test);
   };
 
-  const addTodoHandler = (finalDate) => {  
-    var dateM = format(date, "d MMMM yyyy")
-    onAddTodo(newTodoItem + " " + dateM);
-    // onAddTodo(getDate());
+
+  const addTodoHandler = () => {  
+    var dateM = format(date, "d MMMM yyyy");
+    onAddTodo(newTodoItem + " | " + dateM);
     setNewTodoItem('');
   };
 
@@ -66,17 +56,11 @@ const TodoInsertTasks = ({onAddTodo}) => {
         autoCorrect={false}
       />
       <View style={styles.button}>
-        {/* <Button onPress={showDatepicker} title="Date" /> */}
         <TouchableOpacity onPressOut={showDatepicker}>
           <View>
             <Icon name="calendar" size={30} color="#3143e8" />
           </View>
         </TouchableOpacity>
-        {/* <TouchableOpacity onPressOut={getGeo}>
-          <View>
-            <Icon name="map-pin" size={30} color="#3143e8" />
-          </View>
-        </TouchableOpacity> */}
         <Button title={'GPS'} onPress={getGeo} />
         <Button title={'+'} onPress={addTodoHandler} />
       </View>

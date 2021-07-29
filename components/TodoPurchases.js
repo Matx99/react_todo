@@ -22,7 +22,6 @@ import {
     const addTodo = text => {
       setTodos([
         ...todos,
-        console.log(todos),
         {id: Math.random().toString(), textValue: text, checked: false},
       ]);
     };
