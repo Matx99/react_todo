@@ -1,3 +1,6 @@
-@KARL : enlever le local.properties dans ./android si le build de se lance pas
-npm install
+## @KARL : enlever le local.properties dans ./android si le build ne fonctionne pas
+
+
+### dependances:
+`npm install`
 
