@@ -17,6 +17,8 @@ const TodoInsertTasks = ({onAddTodo}) => {
 
   const getGeo = () => {
     Geolocation.getCurrentPosition(info => console.log(info.coords.latitude + " " + info.coords.longitude));
+    setGeo(Geolocation.getCurrentPosition(info => info.coords.latitude + " " + info.coords.longitude));
+    return geo;
   };
 
   const todoInputHandler = newTodo => {
@@ -32,7 +34,7 @@ const TodoInsertTasks = ({onAddTodo}) => {
 
   const addTodoHandler = () => {  
     var dateM = format(date, "d MMMM yyyy");
-    onAddTodo(newTodoItem + " | " + dateM);
+    onAddTodo(newTodoItem + " | " + dateM + " | " + getGeo().toString());
     setNewTodoItem('');
   };
 
